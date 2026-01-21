@@ -8,12 +8,13 @@ import {
   Delete,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
+import { CreateSongDto } from './dto/create-song-dito';
 
 @Controller('songs')
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
   @Get()
-  getSongs(): string[] {
+  getSongs(): CreateSongDto[] {
     return this.songsService.getSongs();
   }
 
@@ -23,20 +24,20 @@ export class SongsController {
   }
 
   @Post()
-  createSong(@Body() body: { name: string }): string[] {
-    return this.songsService.createSong(body.name);
+  createSong(@Body() createSongDto: CreateSongDto): CreateSongDto[] {
+    return this.songsService.createSong(createSongDto);
   }
 
   @Put(':id')
   updateSong(
     @Param('id') id: string,
-    @Body() body: { name: string },
-  ): string[] {
-    return this.songsService.updateSong(id, body.name);
+    @Body() createSongDto: CreateSongDto,
+  ): CreateSongDto {
+    return this.songsService.updateSong(id, createSongDto);
   }
 
   @Delete(':id')
-  deleteSong(@Param('id') id: string): string[] {
+  deleteSong(@Param('id') id: string): CreateSongDto[] {
     return this.songsService.deleteSong(id);
   }
 }

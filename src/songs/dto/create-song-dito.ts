@@ -1,19 +1,40 @@
-import { IsString, IsNotEmpty, MinLength, MaxLength, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  MinLength,
+  MaxLength,
+  IsArray,
+  IsDateString,
+  IsMilitaryTime,
+  IsNumber,
+} from 'class-validator';
 
 export class CreateSongDto {
-  
+  @IsString()
   @IsNotEmpty()
   @MinLength(3)
   @MaxLength(20)
   readonly title: string;
 
- @IsString()
+  @IsString({ each: true })
   @IsNotEmpty()
-   @IsArray()
-  readonly artist: string;
+  @IsArray()
+  readonly artist: string[];
+
+  @IsDateString()
   readonly releaseDate: Date;
+
+  @IsMilitaryTime()
   readonly duration: Date;
-  readonly genre: string;
+
+  @IsString({ each: true })
+  @IsNotEmpty()
+  @IsArray()
+  readonly genre: string[];
+
+  @IsNumber()
   readonly year: number;
+
+  @IsString()
   readonly album: string;
 }
